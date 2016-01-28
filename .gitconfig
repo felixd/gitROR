@@ -1,3 +1,8 @@
+# © Outsourcing IT - Konopnickiej.Com
+# Author: Paweł Wojciechowski
+# Date: 28th Janury 2016
+# Version: v1.0
+
 [push]
     default = simple
 
@@ -118,3 +123,4 @@
 #http://oli.jp/2012/git-powerup/#conclusion
 #http://blog.blindgaenger.net/advanced_git_aliases.html
 #https://gist.github.com/robmiller/6018582 (branch-name, publish, unpublish)
+#https://github.com/jakubnabrdalik/gitkurwa - Git Kurwa!

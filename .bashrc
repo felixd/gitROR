@@ -1,7 +1,7 @@
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
 # Date: 28th Janury 2016
-# Version: 0.1
+# Version: v1.0
 
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then

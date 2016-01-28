@@ -3,7 +3,7 @@
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
 # Date: 28th Janury 2016
-# Version: 0.1
+# Version: v1.0
 
 RUBY_VER="2.2.4"
 
@@ -89,7 +89,8 @@ echo
     files=( '.gitconfig' '.bashrc' '.bash_aliases' )
     for file in "${files[@]}"
     do
-      echo "Copying $file to ~/$file"
+      echo "Installing ~/$file"
+      cp -f ~/$file ~/$file.old
       cp -f $file ~/$file
     done
 
@@ -174,18 +175,20 @@ dialog)
  esac
 }
 
-# You can select manually which menu to select by providing 1st paramter for script.
+# You can select manually which menu to select by providing parameter to # ./install.sh script.
 
 case $1 in
  txt)
-	gui txt ;; 
+  gui txt
+ ;;
  dialog)
-	gui dialog ;;
+  gui dialog
+ ;;
  *)
-	if command_exists dialog ; then
- 	 gui dialog
-	else
-	 gui txt
-	fi ;;
+  if command_exists dialog ; then
+   gui dialog
+  else
+   gui txt
+  fi
+ ;;
 esac
-
