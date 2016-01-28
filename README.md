@@ -1,9 +1,10 @@
 # DevKit - GitROR
 **Tool for automatic installation of:**
 * Git fancy improvements - colors and aliases + some setting
-** **push.default** is set to **simple** (default in Git 2.0)
 
-* Latest stable Ruby version  via rbenv
+**push.default** is set to **simple** (default in Git 2.0)
+
+* Latest stable Ruby version (2.2.4) via rbenv
 
 ## TODO
 Automatization of:
