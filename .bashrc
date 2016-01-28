@@ -1,3 +1,8 @@
+# © Outsourcing IT - Konopnickiej.Com
+# Author: Paweł Wojciechowski
+# Date: 28th Janury 2016
+# Version: 0.1
+
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     c_reset='\[\e[0m\]'
@@ -45,7 +50,6 @@ if ! shopt -oq posix; then
 fi
 
 # Checking if rbenv (Ruby) is installed. If it's adding it to $PATH
-# TODO: Automatic Ruby installation
 
 if [ -d ~/.rbenv/ ]; then
  export PATH="$HOME/.rbenv/bin:$PATH"

@@ -1,7 +1,3 @@
-[user]
-    name = **Your Name**
-    email = **your@email.com**
-
 [push]
     default = simple
 

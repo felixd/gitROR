@@ -9,3 +9,8 @@ fi
 alias ll='ls -alCF'
 alias la='ls -A'
 alias l='ls -alF'
+
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
