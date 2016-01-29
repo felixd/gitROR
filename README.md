@@ -1,28 +1,27 @@
 # DevKit - GitROR
 **Tool for automatic installation of:**
-* Git fancy improvements - colors and aliases + some settings
+* **Git** with Git Kurwa! option (colorful Bash prompt with Git integration, new git aliases and some nice options already set)
 
 **push.default** is set to **simple** (default in Git 2.0)
 
-* Latest stable Ruby version (2.2.4) via rbenv
+* Latest stable **Ruby** version via **rbenv**
+* Latest stable **Ruby on Rails**
+* **MySQL** client and dev files
 
-## TODO
-Automatic installation of:
-* Git
-* Ruby on Rails
+You can check versions that are used in  [versions.sh](versions.sh) file.
 
 ## Requirements
 What's required:
-* GNU Linux - I've tested it on Debian/Ubuntu
-* Already installed Git - https://git-scm.com/
+* Debian/Ubuntu
+* Access to **sudo** and **apt-get**
 * GNU Bash
 
 ## Installation
 
 ```bash
-$ git clone https://github.com/felixdgniezno/linux-devkit-gitror.git
-$ cd linux-devkit-gitror
-$ ./install.sh
+git clone https://github.com/felixdgniezno/linux-devkit-gitror.git
+cd linux-devkit-gitror
+./install.sh
 ```
 
 In case of any displaying problems your can run installer with **txt** parameter:

@@ -3,17 +3,61 @@
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
 
+DESCRIPTION_OPTIONS_GIT="Git with Git Kurwa! option"
+DESCRIPTION_OPTIONS_RUBY="Ruby $RUBY_VER via rbevn"
+DESCRIPTION_OPTIONS_ROR="Ruby on Rails - latest version"
+DESCRIPTION_OPTIONS_MYSQL="MySQL client and dev packages"
+
 command_exists () {
   type "$1" &> /dev/null ;
 }
 
-# Installation function. This is where magic happens.
+function pre_checks {
+
+  if command_exists apt-get ; then
+    echo 'apt-get is available.'
+  else
+    echo 'apt-get is not available'
+    return 0
+  fi
+
+  if command_exists sudo ; then
+    echo "sudo is avaialble. Checking if we can use it:"
+    sudo true
+    if [ "$?" == 0 ] ; then
+      echo 'sudo works. Performing package update.'
+      #sudo apt-get update
+      pause
+    else
+      echo "We don't have access to sudo."
+      return 0
+    fi
+  else
+    echo 'sudo is not avaialable'
+    return 0
+  fi
+
+  return 1
+
+}
 
 function line {
   echo '#####################################################'
 }
 
-function install {
+function display_author {
+  echo
+  echo '+-------------------------------------+'
+  echo '| © Outsourcing IT - Konopnickiej.Com |'
+  echo '| Author: Paweł Wojciechowski         |'
+  echo '+-------------------------------------+'
+  echo
+}
+
+
+# Installation function. This is where magic happens.
+
+function install_option {
 
   echo
   line
@@ -26,8 +70,10 @@ function install {
     ruby)
 
     echo "Installing Ruby $RUBY_VER via rbenv"
-    echo 'With Ruby installation you have to install GNU Bash for Git'
     echo
+
+    echo 'Installing requiured packages:'
+    sudo apt-get install curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 
     if command_exists rbenv ; then
 
@@ -43,6 +89,7 @@ function install {
       git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
       export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
       git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+
     fi
 
     rbenv install "$RUBY_VER"
@@ -50,15 +97,61 @@ function install {
 
     ;;
 
-    bash4git)
+    ruby_on_rails)
+    # Ruby on Rails installation
+    if command_exists gem ; then
+
+      if [ -n "$RUBY_ON_RAILS_VER" ]; then
+
+        echo "Installing Ruby on Rails from versions.sh file: $RUBY_ON_RAILS_VER"
+        gem install rails -v "$RUBY_ON_RAILS_VER"
+
+      else
+
+        echo 'Installing latest, stable Ruby on Rails available.'
+        gem install rails
+
+      fi
+
+      rbenv rehash
+
+    else
+
+      echo '*gem* is not available. Have you already installed Ruby?'
+
+    fi
+
+    ;;
+
+    mysql)
+
+    sudo apt-get install mysql-server mysql-client libmysqlclient-dev
+
+    ;;
+
+    git)
+    # Git improvements installation.
 
     if command_exists git ; then
+
+      echo 'Git is installed. Skipping installation'
+
+    else
+
+      sudo apt-get install git-core
+
+    fi
+
+    if command_exists git ; then
+
+      echo
       echo 'Installing GNU Bash for Git'
       echo "Setting global Git configuration"
-      echo
 
+      echo
       GIT_NAME=$(git config --global user.name)
       GIT_EMAIL=$(git config --global user.email)
+      echo
 
       if [ ! -z "$GIT_NAME" ] ; then
         echo "I've found Git global user.name: $GIT_NAME"
@@ -93,7 +186,7 @@ function install {
       git config --global user.email "$GIT_EMAIL"
 
     else
-      echo 'Git is not installed. Please install it'
+      echo 'Git is not installed. Please check what happened'
     fi
 
     ;;
@@ -101,9 +194,7 @@ function install {
   esac
 
   echo
-  line
   echo "Installation of $1 finished."
-  line
   echo
 
 }
@@ -115,36 +206,38 @@ function install {
 function gui {
   case $1 in
     txt)
-    echo
-    line
-    echo '© Outsourcing IT - Konopnickiej.Com'
-    line
-    echo
+
+    display_author
+
     line
     echo 'Welcome to our installer'
     line
     echo
 
     PROMPT="
-    Pick an option to install:
+    Pick an option to install [ENTER]:
     "
 
     options=(
-    "* Colorful and useful GNU Bash for Git functionality *"
-    "* Install Ruby $RUBY_VER via rbevn *"
+    "$DESCRIPTION_OPTIONS_GIT"
+    "$DESCRIPTION_OPTIONS_RUBY"
+    "$DESCRIPTION_OPTIONS_ROR"
+    "$DESCRIPTION_OPTIONS_MYSQL"
     )
 
     PS3="$PROMPT"
-    select opt in "${options[@]}" "Quit                                "; do
+
+    select opt in "${options[@]}" "Quit"; do
 
       case "$REPLY" in
 
-        1 ) install bash4git ;;
-        2 ) install ruby ;;
-
+        1) install_option git ;;
+        2) install_option ruby ;;
+        3) install_option ruby_on_rails ;;
+        4) install_option mysql ;;
         $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
 
-        *) echo "Invalid option: $opt - [$REPLY]. Try another one. "; continue;;
+        *) echo "Invalid option: [$REPLY]. Try another one. "; continue;;
 
       esac
 
@@ -152,21 +245,33 @@ function gui {
     ;;
 
     dialog)
+
     cmd=(dialog --separate-output --checklist "Select options to install:" 22 76 16)
+
     options=(
-      1 "Colorful and useful GNU Bash for Git functionality" on
-      2 "Install Ruby $RUBY_VER via rbevn" on
+    1 "$DESCRIPTION_OPTIONS_GIT" on
+    2 "$DESCRIPTION_OPTIONS_RUBY" on
+    3 "$DESCRIPTION_OPTIONS_ROR" on
+    4 "$DESCRIPTION_OPTIONS_MYSQL" on
     )
+
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
     clear
+
     for choice in $choices
     do
       case $choice in
-        1 ) install bash4git ;;
-        2 ) install ruby ;;
+
+        1 ) install_option git ;;
+        2 ) install_option ruby ;;
+        3 ) install_option ruby_on_rails ;;
+        4 ) install_option mysql ;;
+
       esac
     done
+
     ;;
+
   esac
 }

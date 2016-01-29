@@ -3,7 +3,7 @@
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
 # Date: 28th Janury 2016
-# Version: v1.0
+# Version: v1.1
 
 source "versions.sh"
 source "app/app.sh"
@@ -15,6 +15,19 @@ clear
 # $ ./install.sh dialog   - GUI menu using Dialog application (if available)
 # $ ./install.sh          - Automatically discovered
 
+display_author
+
+line
+echo "Checking if we will be able to install stuff."
+line
+
+pre_checks
+if [ "$?" == 0 ] ; then
+  echo 'Pre checking failed. Exiting.'
+  exit
+fi
+
+clear
 
 case $1 in
   txt)
