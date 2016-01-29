@@ -26,7 +26,7 @@ function pre_checks {
     sudo true
     if [ "$?" == 0 ] ; then
       echo 'sudo works. Performing package update.'
-      #sudo apt-get update
+      sudo apt-get update
       pause
     else
       echo "We don't have access to sudo."
