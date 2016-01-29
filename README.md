@@ -26,8 +26,8 @@ cd linux-devkit-gitror
 
 In case of any displaying problems your can run installer with **txt** parameter:
 
-```
-$ ./install txt
+```bash
+./install txt
 ```
 ## Files that will be changed/created
 
