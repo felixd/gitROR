@@ -10,16 +10,23 @@ source "app/app.sh"
 
 clear
 
-# You can select manually which menu to select by providing parameter to # ./install.sh script.
+# Select Menu type manually (using parameter) or let it be discovered automatically.
+# $ ./install.sh txt      - Plain Text menu
+# $ ./install.sh dialog   - GUI menu using Dialog application (if available)
+# $ ./install.sh          - Automatically discovered
+
 
 case $1 in
   txt)
-  gui txt
-  ;;
+  # Menu created using plain text
+  gui txt ;;
+
   dialog)
-  gui dialog
-  ;;
+  # Menu created using 'dialog'
+  gui dialog ;;
+
   *)
+  # Automatic menu type is being discovered below.
   if command_exists dialog ; then
     gui dialog
   else

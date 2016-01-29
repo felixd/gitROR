@@ -85,7 +85,7 @@ function install {
       do
         echo "Installing ~/$file"
         cp -f ~/"$file" ~/"$file".old
-        cp -f "$file" ~/"$file"
+        cp -f "files/$file" ~/"$file"
       done
 
       echo 'Setting Git global user.name and user.email'
@@ -108,9 +108,9 @@ function install {
 
 }
 
-# Function that build selectable menu. It has two options
-# * txt - simple text menu
-# * dialog - menu built using dialog command
+# Function that builds selectable menu. It has two options
+# * txt     - simple, plain text menu
+# * dialog  - menu created with Dialog application (if available)
 
 function gui {
   case $1 in
