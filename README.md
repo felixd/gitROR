@@ -11,9 +11,8 @@
 You can check versions that are used in  [versions.sh](versions.sh) file.
 
 ## Requirements
-What's required:
 * Debian/Ubuntu
-* Access to **sudo** and **apt-get**
+* You should be able to use **sudo apt-get** command
 * GNU Bash
 
 ## Installation
