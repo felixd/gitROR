@@ -1,7 +1,7 @@
+#!/bin/bash
+
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
-# Date: 28th Janury 2016
-# Version: v1.0
 
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"

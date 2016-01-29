@@ -1,21 +1,21 @@
+#!/bin/bash
+
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
-# Date: 28th Janury 2016
-# Version: v1.0
 
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
   c_reset='\[\e[0m\]'
   c_user='\[\033[1;31m\]'
   c_path='\[\e[0;34m\]'
-  c_git_clean='\[\e[0;36m\]'
-  c_git_dirty='\[\e[0;35m\]'
+#  c_git_clean='\[\e[0;36m\]'
+#  c_git_dirty='\[\e[0;35m\]'
 else
   c_reset=
   c_user=
   c_path=
-  c_git_clean=
-  c_git_dirty=
+#  c_git_clean=
+#  c_git_dirty=
 fi
 
 # Function to assemble the Git part of our prompt.
