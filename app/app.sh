@@ -95,6 +95,13 @@ function install_option {
     rbenv install "$RUBY_VER"
     rbenv global "$RUBY_VER"
 
+    if command_exists gem ; then
+      echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+      gem install bundler
+    else
+      echo "I'm not able to install bundle. gem is not available"
+    fi
+
     ;;
 
     ruby_on_rails)
