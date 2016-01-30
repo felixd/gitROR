@@ -6,7 +6,8 @@
 DESCRIPTION_OPTIONS_GIT="Git with Git Kurwa! option"
 DESCRIPTION_OPTIONS_RUBY="Ruby $RUBY_VER via rbevn"
 DESCRIPTION_OPTIONS_ROR="Ruby on Rails - latest version"
-DESCRIPTION_OPTIONS_MYSQL="MySQL client and dev packages"
+DESCRIPTION_OPTIONS_MYSQL_CLIENT="MySQL client + dev packages"
+DESCRIPTION_OPTIONS_MYSQL_SERVER="MySQL server"
 
 command_exists () {
   type "$1" &> /dev/null ;
@@ -27,7 +28,7 @@ function pre_checks {
     if [ "$?" == 0 ] ; then
       echo 'sudo works. Performing package update.'
       sudo apt-get update
-      pause
+      sudo apt-get install dialog
     else
       echo "We don't have access to sudo."
       return 0
@@ -77,7 +78,7 @@ function install_option {
 
     if command_exists rbenv ; then
 
-      echo 'rbenv is already installed. Skipping this part...'
+      echo 'rbenv is already installed.'
 
     else
 
@@ -130,11 +131,8 @@ function install_option {
 
     ;;
 
-    mysql)
-
-    sudo apt-get install mysql-server mysql-client libmysqlclient-dev
-
-    ;;
+    mysql_client) sudo apt-get install mysql-client libmysqlclient-dev ;;
+    mysql_server) sudo apt-get install mysql-server ;;
 
     git)
     # Git improvements installation.
@@ -229,7 +227,8 @@ function gui {
     "$DESCRIPTION_OPTIONS_GIT"
     "$DESCRIPTION_OPTIONS_RUBY"
     "$DESCRIPTION_OPTIONS_ROR"
-    "$DESCRIPTION_OPTIONS_MYSQL"
+    "$DESCRIPTION_OPTIONS_MYSQL_CLIENT"
+    "$DESCRIPTION_OPTIONS_MYSQL_SERVER"
     )
 
     PS3="$PROMPT"
@@ -241,7 +240,8 @@ function gui {
         1) install_option git ;;
         2) install_option ruby ;;
         3) install_option ruby_on_rails ;;
-        4) install_option mysql ;;
+        4) install_option mysql_client ;;
+        5) install_option mysql_server ;;
         $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
 
         *) echo "Invalid option: [$REPLY]. Try another one. "; continue;;
@@ -259,7 +259,8 @@ function gui {
     1 "$DESCRIPTION_OPTIONS_GIT" on
     2 "$DESCRIPTION_OPTIONS_RUBY" on
     3 "$DESCRIPTION_OPTIONS_ROR" on
-    4 "$DESCRIPTION_OPTIONS_MYSQL" on
+    4 "$DESCRIPTION_OPTIONS_MYSQL_CLIENT" on
+    5 "$DESCRIPTION_OPTIONS_MYSQL_SERVER" off
     )
 
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -273,7 +274,8 @@ function gui {
         1 ) install_option git ;;
         2 ) install_option ruby ;;
         3 ) install_option ruby_on_rails ;;
-        4 ) install_option mysql ;;
+        4 ) install_option mysql_client ;;
+        5 ) install_option mysql_server ;;
 
       esac
     done

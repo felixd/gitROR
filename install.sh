@@ -3,7 +3,7 @@
 # © Outsourcing IT - Konopnickiej.Com
 # Author: Paweł Wojciechowski
 # Date: 28th Janury 2016
-# Version: v1.1
+# Version: v1.2.0
 
 source "versions.sh"
 source "app/app.sh"
