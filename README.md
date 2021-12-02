@@ -39,3 +39,9 @@ They will be backed up with **.old** extenstion.
 ## Stuff used to create this repo
 
 [Git Kurwa!](https://github.com/jakubnabrdalik/gitkurwa) for initial nice Git aliases and BASH Git support
+
+## Donations & Support
+
+If You would like to support this project:
+
+* **BTC**: bc1qe4clvflldgqw5s9y0yn3lm99lz9yf9mn4x3zfe
